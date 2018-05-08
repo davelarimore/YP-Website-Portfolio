@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Yellow Pages - Website Portfolio</title>
+  <meta name="description" content="Showcase your business with a website that's eye-catching and lead-generating. Get inspired now!" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+<!--[if lt IE 9]>
+			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+			<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+		<![endif]-->
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="css/mix.css"/>
+  <link rel="shortcut icon" type="image/x-icon" href="im/favicon.ico"/>
+  <link rel='stylesheet' href='http://static.yellowpages.ca/ypca/fonts/yplocal/yplocal.css' type='text/css'>
+  <link rel='stylesheet' href='http://static.yellowpages.ca/ypca/fonts/yphand/yphand.css' type='text/css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="js/jquery-ui.sortable.min.js"></script>-->
+  <!--<script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>-->
+  <script type="text/javascript" src="js/jquery.mixitup.js"></script>
+  <script type="text/javascript">
+
+			// NICE IMAGE LOADING
+
+			function imgLoaded(img){
+				$(img).parent().addClass('loaded');
+			};
+
+			// ON DOCUMENT READY:
+
+			$(function(){
+
+				// INSTANTIATE MIXITUP
+
+				$('#Parks').mixitup({
+					layoutMode: 'grid', // Start in list mode (display: block) by default
+					listClass: 'list', // Container class for when in list mode
+					gridClass: 'grid', // Container class for when in grid mode
+					effects: ['fade','blur'], // List of effects
+					listEffects: ['fade','rotateX'] // List of effects ONLY for list mode
+				});
+
+				// HANDLE LAYOUT CHANGES
+
+				// Bind layout buttons to toList and toGrid methods:
+
+				$('#ToList').on('click',function(){
+					$('.button').removeClass('active');
+					$(this).addClass('active');
+					$('#Parks').mixitup('toList');
+				});
+
+				$('#ToGrid').on('click',function(){
+					$('.button').removeClass('active');
+					$(this).addClass('active');
+					$('#Parks').mixitup('toGrid');
+				});
+
+				// HANDLE MULTI-DIMENSIONAL CHECKBOX FILTERING
+
+				var $filters = $('#Filters').find('li'),
+					dimensions = {
+						udac: 'all', // Create string for second dimension
+						heading: 'all', // Create string for first dimension
+						lang: 'all', // Create string for second dimension
+					};
+
+				// Bind checkbox click handlers:
+
+				$filters.on('click',function(){
+					var $t = $(this),
+						dimension = $t.attr('data-dimension'),
+						filter = $t.attr('data-filter'),
+						filterString = dimensions[dimension];
+
+					if(filter == 'all'){
+						// If "all"
+						if(!$t.hasClass('active')){
+							// if unchecked, check "all" and uncheck all other active filters
+							$t.addClass('active').siblings().removeClass('active');
+							// Replace entire string with "all"
+							filterString = 'all';
+						} else {
+							// Uncheck
+							$t.removeClass('active');
+							// Emtpy string
+							filterString = '';
+						}
+					} else {
+						// Else, uncheck "all"
+						$t.siblings('[data-filter="all"]').removeClass('active');
+						// Remove "all" from string
+						filterString = filterString.replace('all','');
+						if(!$t.hasClass('active')){
+							// Check checkbox
+							$t.addClass('active');
+							// Append filter to string
+							filterString = filterString == '' ? filter : filterString+' '+filter;
+						} else {
+							// Uncheck
+							$t.removeClass('active');
+							// Remove filter and preceeding space from string with RegEx
+							var re = new RegExp('(\\s|^)'+filter);
+							filterString = filterString.replace(re,'');
+						};
+					};
+
+					// Set demension with filterString
+					dimensions[dimension] = filterString;
+
+					// We now have two strings containing the filter arguments for each dimension:
+					console.info('dimension 1: '+dimensions.heading);
+					console.info('dimension 2: '+dimensions.udac);
+					console.info('dimension 3: '+dimensions.lang);
+					/*
+					*	We then send these strings to MixItUp using the filter method. We can send as
+					*	many dimensions to MixitUp as we need using an array as the second argument
+					*	of the "filter" method. Each dimension must be a space seperated string.
+					*
+					*	In this case, MixItUp will show elements using OR logic within each dimension and
+					*	AND logic between dimensions. At least one dimension must pass for the element to show.
+					*/
+
+					$('#Parks').mixitup('filter',[dimensions.heading, dimensions.udac, dimensions.lang])
+				});
+
+			});
+		</script>
+
+</head>
+<body>
+  <section>
+    <header>
+      <div class="wrapper just wf"> <img src="im/logo.png">
+
+        <div class="lang"><a href="index_fr.html">Français</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://businesscentre.yp.ca">Yellow Pages for Business</a></div>
+      </div>
+    </header>
+
+    <!-- END HEADER -->
+
+    <section class="home">
+      <div class="row">
+        <h1>Welcome to the Website Portfolio</h1>
+        <p>Showcase your business with a website that's eye-catching and lead-generating. Get inspired now!</p>
+        <p>Below you will find a sample of our websites by category. Find the one that inspires you.</p>
+        <p>We have recently improved our product and are rebuilding our Website and Website Plus portfolio. Come back soon to see more examples of sites we have created.</p>
+      </div>
+    </section>
+
+
+  <!-- BEGIN GALLERY -->
+
+  <div class="wrapper wf">
+
+    <!-- BEGIN CONTROLS -->
+
+    <nav class="controls just">
+      <div class="group" id="Filters">
+        Filter by:&nbsp;
+        <div class="drop_down wf" onClick="ga('send', 'event', 'Category Filter', 'Click', 'Category Filter');"> <span class="anim150">Category</span>
+          <ul class="anim250">
+            <div class="column">
+              <li class="heading active" data-filter="all" data-dimension="heading">All</li>
+              <li data-filter="acc" data-dimension="heading">Accountants</li>
+              <li data-filter="appl" data-dimension="heading">Appliances</li>
+              <li data-filter="auto" data-dimension="heading">Auto Repair &amp;amp; Towing</li>
+              <li data-filter="body" data-dimension="heading">Automotive Body Work</li>
+              <li data-filter="part" data-dimension="heading">Automotive Parts &amp; Supplies</li>
+              <li data-filter="salon" data-dimension="heading">Beauty</li>
+              <li data-filter="bus" data-dimension="heading">Business &amp; Professional Services</li>
+              <li data-filter="child" data-dimension="heading">Child Care &amp; School</li>
+              <li data-filter="clean" data-dimension="heading">Cleaning Systems &amp; Services</li>
+              <li data-filter="clin" data-dimension="heading">Clinics &amp; Long Term Care</li>
+              <li data-filter="cloth" data-dimension="heading">Clothing &amp; Footwear</li>
+              <li data-filter="comp" data-dimension="heading">Computers &amp; Telecommunication</li>
+              <li data-filter="reno" data-dimension="heading">Contractor &amp; Renovation</li>
+              <li data-filter="dent" data-dimension="heading">Dental Care</li>
+              <li data-filter="elec" data-dimension="heading">Electric Contractors</li>
+              <li data-filter="ent" data-dimension="heading">Entertainment</li>
+            </div>
+
+            <div class="column">
+              <li data-filter="ex" data-dimension="heading">Excavation</li>
+              <li data-filter="eye" data-dimension="heading">Eye Care</li>
+              <li data-filter="fin" data-dimension="heading">Finance &amp; Legal</li>
+              <li data-filter="fit" data-dimension="heading">Fitness &amp; Exercise</li>
+              <li data-filter="flor" data-dimension="heading">Florists</li>
+              <li data-filter="lawn" data-dimension="heading">Garden &amp; Lawn</li>
+              <li data-filter="hvac" data-dimension="heading">Heating &amp; Cooling</li>
+              <li data-filter="furn" data-dimension="heading">Home Renovation &amp; Furniture</li>
+              <li data-filter="ind" data-dimension="heading">Industrial Supplies &amp; Services</li>
+              <li data-filter="ins" data-dimension="heading">Insurance</li>
+              <li data-filter="law" data-dimension="heading">Lawyers</li>
+              <li data-filter="mas" data-dimension="heading">Massages &amp; Alternative Medecines</li>
+              <li data-filter="med" data-dimension="heading">Medical Products, Equipment &amp; Services</li>
+              <li data-filter="moving" data-dimension="heading">Moving &amp; Storage</li>
+              <li data-filter="not" data-dimension="heading">Notaries</li>
+              <li data-filter="oil" data-dimension="heading">Oil Services</li>
+              <li data-filter="paint" data-dimension="heading">Painting &amp; Plastering</li>
+
+            </div>
+            <div class="column">
+              <li data-filter="pest" data-dimension="heading">Pest Control</li>
+              <li data-filter="phys" data-dimension="heading">Physicians &amp; Surgeons</li>
+              <li data-filter="plumb" data-dimension="heading">Plumbing</li>
+              <li data-filter="pub" data-dimension="heading">Public Utilities &amp; Environment</li>
+              <li data-filter="re" data-dimension="heading">Real Estate</li>
+              <li data-filter="rest" data-dimension="heading">Restaurants, Food &amp; Beverages</li>
+              <li data-filter="store" data-dimension="heading">Retail &amp; Stores</li>
+              <li data-filter="roof" data-dimension="heading">Roofers</li>
+              <li data-filter="safe" data-dimension="heading">Safety &amp; Security</li>
+              <li data-filter="sign" data-dimension="heading">Signs</li>
+              <li data-filter="sport" data-dimension="heading">Sports &amp; Recreation</li>
+              <li data-filter="therapy" data-dimension="heading">Therapy &amp; Counselling</li>
+              <li data-filter="trans" data-dimension="heading">Transportation</li>
+              <li data-filter="trav" data-dimension="heading">Travel &amp; Lodging</li>
+              <li data-filter="pet" data-dimension="heading">Veterinarians &amp; Pet Services</li>
+              <li data-filter="win" data-dimension="heading">Windows &amp; Doors</li>
+            </div>
+          </ul>
+        </div>
+
+        <div class="drop_down wf" onClick="ga('send', 'event', 'Product Filter', 'Click', 'Product Filter');"> <span class="anim150">Product Type</span>
+          <ul class="anim250 skinny">
+            <li class="heading active noindent" data-filter="all" data-dimension="udac">All</li>
+            <!--<li class="noindent" data-filter="isa" data-dimension="udac">WebStart</li>-->
+            <li class="noindent" data-filter="base" data-dimension="udac">Website</li>
+            <li class="noindent" data-filter="enhanced" data-dimension="udac">Website Plus</li>
+          </ul>
+        </div>
+
+        <div class="drop_down wf" onClick="ga('send', 'event', 'Language Filter', 'Click', 'Language Filter');"> <span class="anim150">Language</span>
+          <ul class="anim250 skinny">
+            <li class="heading active noindent" data-filter="all" data-dimension="lang">All</li>
+            <li class="noindent" data-filter="en" data-dimension="lang">English</li>
+            <li class="noindent" data-filter="fr" data-dimension="lang">French</li>
+            <li class="noindent" data-filter="bi" data-dimension="lang">Bilingual</li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- END CONTROLS -->
+
+    <ul id="Parks" class="just">
+
+      <!-- FAIL ELEMENT -->
+
+      <div class="fail_element anim250">Sorry &mdash; we could not find any sites matching these criteria</div>
+
+      <!-- BEGIN LIST OF SITES -->
+
+        <li class="mix ex en base" data-name="OMF" data-pages="7" data-heading="Excavation">
+      <a target="_blank" href="http://u683085.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web004.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Excavation</h2><p>WEB004</p></div></div></div>
+                    <div class="meta siteid"><p>WEB004</p></div>
+        <div class="meta heading"><p>Excavation</p></div>
+        <div class="meta rec"><ul><li>Gray</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+       <li class="mix auto en base" data-name="Kelowna auto Care" data-pages="9" data-heading="Auto Repair">
+      <a target="_blank" href="http://u685443.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web009.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Auto Repair</h2><p>WEB009</p></div></div></div>
+                    <div class="meta siteid"><p>WEB009</p></div>
+        <div class="meta heading"><p>Auto Repair</p></div>
+        <div class="meta rec"><ul><li>Gold</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+        <li class="mix reno en base" data-name="K&amp;J Construction" data-pages="7" data-heading="Contractor">
+      <a target="_blank" href="http://u681867.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web010.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Contractor</h2><p>WEB010</p></div></div></div>
+                    <div class="meta siteid"><p>WEB010</p></div>
+        <div class="meta heading"><p>Contractor</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix salon fr base" data-name="Perma-Bronze" data-pages="5" data-heading="Tanning Salon">
+      <a target="_blank" href="http://u683161.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web011.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Tanning Salon</h2><p>WEB011</p></div></div></div>
+                    <div class="meta siteid"><p>WEB011</p></div>
+        <div class="meta heading"><p>Tanning Salon</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+
+      <li class="mix win en base" data-name="Transcona" data-pages="11" data-heading="Garage Doors">
+      <a target="_blank" href="http://u683491.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web012.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Garage Doors</h2><p>WEB012</p></div></div></div>
+                    <div class="meta siteid"><p>WEB012</p></div>
+        <div class="meta heading"><p>Garage Doors</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>11</p></div></a></li>
+
+      <li class="mix salon en base" data-name="Studio 500" data-pages="6" data-heading="Hair Salon">
+      <a target="_blank" href="http://u692969.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web013.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Hair Salon</h2><p>WEB013</p></div></div></div>
+                    <div class="meta siteid"><p>WEB013</p></div>
+        <div class="meta heading"><p>Hair Salon</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>6</p></div></a></li>
+
+      <li class="mix auto fr base" data-name="Excellence" data-pages="7" data-heading="Garage">
+      <a target="_blank" href="http://u692357.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web014.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Garage</h2><p>WEB014</p></div></div></div>
+                    <div class="meta siteid"><p>WEB014</p></div>
+        <div class="meta heading"><p>Garage</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix reno fr base" data-name="Avantage" data-pages="12" data-heading="Contractor">
+      <a target="_blank" href="http://u687737.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web015.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Contractor</h2><p>WEB015</p></div></div></div>
+                    <div class="meta siteid"><p>WEB015</p></div>
+        <div class="meta heading"><p>Contractor</p></div>
+        <div class="meta rec"><ul><li>Yellow</li></ul></div>
+        <div class="meta pages"><p>12</p></div></a></li>
+
+      <li class="mix moving en base" data-name="Al-Ron" data-pages="4" data-heading="Storage">
+      <a target="_blank" href="http://u684005.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web016.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Storage</h2><p>WEB016</p></div></div></div>
+                    <div class="meta siteid"><p>WEB016</p></div>
+        <div class="meta heading"><p>Storage</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix eye en base" data-name="Dr. Yudin" data-pages="4" data-heading="Optometrist">
+      <a target="_blank" href="http://u683183.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web017.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Optometrist</h2><p>WEB017</p></div></div></div>
+                    <div class="meta siteid"><p>WEB017</p></div>
+        <div class="meta heading"><p>Optometrist</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix lawn en base" data-name="Wood Man" data-pages="6" data-heading="Tree Service">
+      <a target="_blank" href="http://u683351.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web018.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Tree Service</h2><p>WEB018</p></div></div></div>
+                    <div class="meta siteid"><p>WEB018</p></div>
+        <div class="meta heading"><p>Tree Service</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>6</p></div></a></li>
+
+      <li class="mix reno en base" data-name="Marco Custom Carpentry" data-pages="8" data-heading="Carpentry">
+      <a target="_blank" href="http://u698711.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web020.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Carpentry</h2><p>WEB020</p></div></div></div>
+                    <div class="meta siteid"><p>WEB020</p></div>
+        <div class="meta heading"><p>Carpentry</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>8</p></div></a></li>
+
+      <li class="mix salon en base" data-name="Lola's Boutique" data-pages="8" data-heading="Salon">
+      <a target="_blank" href="http://u702327.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web021.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Salon</h2><p>WEB021</p></div></div></div>
+                    <div class="meta siteid"><p>WEB021</p></div>
+        <div class="meta heading"><p>Salon</p></div>
+        <div class="meta rec"><ul><li>Violet</li></ul></div>
+        <div class="meta pages"><p>8</p></div></a></li>
+
+      <li class="mix ins en base" data-name="Thorne Insurance" data-pages="11" data-heading="Insurance">
+      <a target="_blank" href="http://u700983.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web022.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Insurance</h2><p>WEB022</p></div></div></div>
+                    <div class="meta siteid"><p>WEB022</p></div>
+        <div class="meta heading"><p>Insurance</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>11</p></div></a></li>
+
+      <li class="mix reno en base" data-name="Blinda Bilou" data-pages="8" data-heading="Interior Design">
+      <a target="_blank" href="http://u698645.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web023.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Interior Design</h2><p>WEB023</p></div></div></div>
+                    <div class="meta siteid"><p>WEB023</p></div>
+        <div class="meta heading"><p>Interior Design</p></div>
+        <div class="meta rec"><ul><li>Brown</li></ul></div>
+        <div class="meta pages"><p>8</p></div></a></li>
+
+
+      <li class="mix trav en base" data-name="Niagara Worldwide Travel Management" data-pages="10" data-heading="Travel">
+      <a target="_blank" href="http://u704489.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web024.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Travel</h2><p>WEB024</p></div></div></div>
+                    <div class="meta siteid"><p>WEB024</p></div>
+        <div class="meta heading"><p>Travel</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix rest en base" data-name="Le Buffet Chinois Drummondville" data-pages="7" data-heading="Restaurant">
+      <a target="_blank" href="http://u709717.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web025.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Restaurant</h2><p>WEB025</p></div></div></div>
+                    <div class="meta siteid"><p>WEB025</p></div>
+        <div class="meta heading"><p>Restaurant</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix salon en base" data-name="Coiffure Modèle" data-pages="9" data-heading="Salon">
+      <a target="_blank" href="http://u692889.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web026.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Salon</h2><p>WEB026</p></div></div></div>
+                    <div class="meta siteid"><p>WEB026</p></div>
+        <div class="meta heading"><p>Salon</p></div>
+        <div class="meta rec"><ul><li>Pink</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix roof en base" data-name="Couvreur du Nord enr" data-pages="4" data-heading="Roofer">
+      <a target="_blank" href="http://u700569.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web027.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Roofer</h2><p>WEB027</p></div></div></div>
+                    <div class="meta siteid"><p>WEB027</p></div>
+        <div class="meta heading"><p>Roofer</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+       <li class="mix reno en base" data-name="Gouttières LM Landry" data-pages="10" data-heading="Roofer">
+      <a target="_blank" href="http://u700103.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web028.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Roofer</h2><p>WEB028</p></div></div></div>
+                    <div class="meta siteid"><p>WEB028</p></div>
+        <div class="meta heading"><p>Roofer</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix flor en base" data-name="Centennial Florist" data-pages="10" data-heading="Florist">
+      <a target="_blank" href="http://u702493.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web029.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Florist</h2><p>WEB029</p></div></div></div>
+                    <div class="meta siteid"><p>WEB029</p></div>
+        <div class="meta heading"><p>Florist</p></div>
+        <div class="meta rec"><ul><li>Pink</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix reno en base" data-name="Gouttière Réno-Soleil" data-pages="5" data-heading="Roofer">
+      <a target="_blank" href="http://u699943.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web030.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Roofer</h2><p>WEB030</p></div></div></div>
+                    <div class="meta siteid"><p>WEB030</p></div>
+        <div class="meta heading"><p>Roofer</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+      <li class="mix mas en base" data-name="Sandra Bernard" data-pages="7" data-heading="Massage">
+      <a target="_blank" href="http://u687873.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web031.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Massage</h2><p>WEB031</p></div></div></div>
+                    <div class="meta siteid"><p>WEB031</p></div>
+        <div class="meta heading"><p>Massage</p></div>
+        <div class="meta rec"><ul><li>Brown</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix plumb en base" data-name="Villeneuve's Plumbing" data-pages="6" data-heading="Plumbing">
+      <a target="_blank" href="http://u687033.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web032.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Plumbing</h2><p>WEB032</p></div></div></div>
+                    <div class="meta siteid"><p>WEB032</p></div>
+        <div class="meta heading"><p>Plumbing</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>6</p></div></a></li>
+
+      <li class="mix salon en base" data-name="Synergy" data-pages="6" data-heading="Salon">
+      <a target="_blank" href="http://u716859.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web034.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Salon</h2><p>WEB034</p></div></div></div>
+                    <div class="meta siteid"><p>WEB034</p></div>
+        <div class="meta heading"><p>Salon</p></div>
+        <div class="meta rec"><ul><li>White</li></ul></div>
+        <div class="meta pages"><p>6</p></div></a></li>
+
+      <li class="mix auto en base" data-name="Big Rig Collision" data-pages="10" data-heading="Truck Repair">
+      <a target="_blank" href="http://u703917.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web035.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Truck Repair</h2><p>WEB035</p></div></div></div>
+                    <div class="meta siteid"><p>WEB035</p></div>
+        <div class="meta heading"><p>Truck Repair</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix lawn en base" data-name="Regional Tree Service" data-pages="10" data-heading="Tree Service">
+      <a target="_blank" href="http://u707157.sandbox.sitereview.ca">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web036.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Tree Service</h2><p>WEB036</p></div></div></div>
+                    <div class="meta siteid"><p>WEB036</p></div>
+        <div class="meta heading"><p>Tree Service</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix mas fr base" data-name="Esthétique Elena" data-pages="6" data-heading="Massage">
+      <a target="_blank" href="http://u696315.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web038.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Massage</h2><p>WEB038</p></div></div></div>
+                    <div class="meta siteid"><p>WEB038</p></div>
+        <div class="meta heading"><p>Massage</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>6</p></div></a></li>
+
+      <li class="mix hvac fr base" data-name="AMP Réfrigération" data-pages="8" data-heading="HVAC">
+      <a target="_blank" href="http://u705853.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web039.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>HVAC</h2><p>WEB039</p></div></div></div>
+                    <div class="meta siteid"><p>WEB039</p></div>
+        <div class="meta heading"><p>HVAC</p></div>
+        <div class="meta rec"><ul><li>White</li></ul></div>
+        <div class="meta pages"><p>8</p></div></a></li>
+
+      <li class="mix reno en base" data-name="John Woods" data-pages="4" data-heading="Renovation">
+      <a target="_blank" href="http://u708689.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web040.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Renovation</h2><p>WEB040</p></div></div></div>
+                    <div class="meta siteid"><p>WEB040</p></div>
+        <div class="meta heading"><p>Renovation</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix dent en base" data-name="GP Denture Clinic" data-pages="19" data-heading="Dentures">
+      <a target="_blank" href="http://u707699.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web041.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Dentures</h2><p>WEB041</p></div></div></div>
+                    <div class="meta siteid"><p>WEB041</p></div>
+        <div class="meta heading"><p>Dentures</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>19</p></div></a></li>
+
+      <li class="mix auto en base" data-name="Super Auto Glass" data-pages="7" data-heading="Auto Glass">
+      <a target="_blank" href="http://u714577.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web042.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Auto Glass</h2><p>WEB042</p></div></div></div>
+                    <div class="meta siteid"><p>WEB042</p></div>
+        <div class="meta heading"><p>Auto Glass</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix reno en base" data-name="Maaten" data-pages="11" data-heading="Construction">
+      <a target="_blank" href="http://u711795.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web044.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Construction</h2><p>WEB044</p></div></div></div>
+                    <div class="meta siteid"><p>WEB044</p></div>
+        <div class="meta heading"><p>Construction</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>11</p></div></a></li>
+
+      <li class="mix salon en base" data-name="Capri Hair Salon" data-pages="7" data-heading="Salon">
+      <a target="_blank" href="http://u705361.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web045.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Salon</h2><p>WEB045</p></div></div></div>
+                    <div class="meta siteid"><p>WEB045</p></div>
+        <div class="meta heading"><p>Salon</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix rest en base" data-name="Original T's" data-pages="10" data-heading="Restaurant">
+      <a target="_blank" href="http://u710151.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web047.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Restaurant</h2><p>WEB047</p></div></div></div>
+                    <div class="meta siteid"><p>WEB047</p></div>
+        <div class="meta heading"><p>Restaurant</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix lawn fr base" data-name="Hydro-Experts" data-pages="9" data-heading="Hydroseeding">
+      <a target="_blank" href="http://u695335.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web048.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Hydroseeding</h2><p>WEB048</p></div></div></div>
+                    <div class="meta siteid"><p>WEB048</p></div>
+        <div class="meta heading"><p>Hydroseeding</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix rest en base" data-name="Wrap Zone" data-pages="4" data-heading="Restaurant">
+      <a target="_blank" href="http://u707597.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web049.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Restaurant</h2><p>WEB049</p></div></div></div>
+                    <div class="meta siteid"><p>WEB049</p></div>
+        <div class="meta heading"><p>Restaurant</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix ind en base" data-name="Sundown Oilfield Services" data-pages="4" data-heading="Oilfield Services">
+      <a target="_blank" href="http://u712207.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web050.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Oilfield Services</h2><p>WEB050</p></div></div></div>
+                    <div class="meta siteid"><p>WEB050</p></div>
+        <div class="meta heading"><p>Oilfield Services</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix roof en base" data-name="Jackson Roofing" data-pages="9" data-heading="Roofer">
+      <a target="_blank" href="http://u710217.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web051.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Roofer</h2><p>WEB051</p></div></div></div>
+                    <div class="meta siteid"><p>WEB051</p></div>
+        <div class="meta heading"><p>Roofer</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix fin en base" data-name="Liquid Capital" data-pages="8" data-heading="Financial Services">
+      <a target="_blank" href="http://u711641.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web054.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Financial Services</h2><p>WEB054</p></div></div></div>
+                    <div class="meta siteid"><p>WEB054</p></div>
+        <div class="meta heading"><p>Financial Services</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>8</p></div></a></li>
+
+      <li class="mix dent en base" data-name="Park Mall Dental" data-pages="14" data-heading="Dentist">
+      <a target="_blank" href="http://u715809.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web055.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Dentist</h2><p>WEB055</p></div></div></div>
+                    <div class="meta siteid"><p>WEB055</p></div>
+        <div class="meta heading"><p>Dentist</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>14</p></div></a></li>
+
+      <li class="mix re en base" data-name="Nearhood" data-pages="11" data-heading="Appraisal Services">
+      <a target="_blank" href="http://u725903.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web056.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Appraisal Services</h2><p>WEB056</p></div></div></div>
+                    <div class="meta siteid"><p>WEB056</p></div>
+        <div class="meta heading"><p>Appraisal Services</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>11</p></div></a></li>
+
+      <li class="mix reno en base" data-name="Kitchen Elements" data-pages="6" data-heading="Renovation">
+      <a target="_blank" href="http://u719027.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web057.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Renovation</h2><p>WEB057</p></div></div></div>
+                    <div class="meta siteid"><p>WEB057</p></div>
+        <div class="meta heading"><p>Renovation</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>6</p></div></a></li>
+
+      <li class="mix phys en base" data-name="Pedco" data-pages="20" data-heading="Podiatrist">
+      <a target="_blank" href="http://u718017.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web058.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Podiatrist</h2><p>WEB058</p></div></div></div>
+                    <div class="meta siteid"><p>WEB058</p></div>
+        <div class="meta heading"><p>Podiatrist</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>20</p></div></a></li>
+
+		<li class="mix reno fr base" data-name="Pareco" data-pages="7" data-heading="Renovation">
+      <a target="_blank" href="http://u703975.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web059.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Renovation</h2><p>WEB059</p></div></div></div>
+                    <div class="meta siteid"><p>WEB059</p></div>
+        <div class="meta heading"><p>Renovation</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix comp fr base" data-name="L’Extra-Son" data-pages="12" data-heading="AV Equipment">
+      <a target="_blank" href="http://u721133.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web060.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>AV Equipment</h2><p>WEB060</p></div></div></div>
+                    <div class="meta siteid"><p>WEB060</p></div>
+        <div class="meta heading"><p>AV Equipment</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>12</p></div></a></li>
+
+      <li class="mix pet fr base" data-name="La Clinique Vétérinaire de Luceville" data-pages="13" data-heading="Veterinarian">
+      <a target="_blank" href="http://u726855.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web061.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Veterinarian</h2><p>WEB061</p></div></div></div>
+                    <div class="meta siteid"><p>WEB061</p></div>
+        <div class="meta heading"><p>Veterinarian</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>13</p></div></a></li>
+
+      <li class="mix clean fr base" data-name="Nettoyage &amp; Maintenance Lévesque" data-pages="8" data-heading="Cleaning">
+      <a target="_blank" href="http://u729671.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web062.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Cleaning</h2><p>WEB062</p></div></div></div>
+                    <div class="meta siteid"><p>WEB062</p></div>
+        <div class="meta heading"><p>Cleaning</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>8</p></div></a></li>
+
+      <li class="mix salon fr base" data-name="Institut Derma Laser" data-pages="4" data-heading="Salon">
+      <a target="_blank" href="http://u726879.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web063.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Salon</h2><p>WEB063</p></div></div></div>
+                    <div class="meta siteid"><p>WEB063</p></div>
+        <div class="meta heading"><p>Salon</p></div>
+        <div class="meta rec"><ul><li>Pink</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix hvac fr base" data-name="Air-pure" data-pages="10" data-heading="Air Purification">
+      <a target="_blank" href="http://u727849.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web064.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Air Purification</h2><p>WEB064</p></div></div></div>
+                    <div class="meta siteid"><p>WEB064</p></div>
+        <div class="meta heading"><p>Air Purification</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix law fr base" data-name="Paré, Ouellet, Bigaouette &amp; associés" data-pages="6" data-heading="Bailiffs">
+      <a target="_blank" href="http://u731067.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web065.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Bailiffs</h2><p>WEB065</p></div></div></div>
+                    <div class="meta siteid"><p>WEB065</p></div>
+        <div class="meta heading"><p>Bailiffs</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>6</p></div></a></li>
+
+      <li class="mix reno fr base" data-name="BM Armoires" data-pages="10" data-heading="Cabinets">
+      <a target="_blank" href="http://u725533.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web066.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Cabinets</h2><p>WEB066</p></div></div></div>
+                    <div class="meta siteid"><p>WEB066</p></div>
+        <div class="meta heading"><p>Cabinets</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix dent fr base" data-name="Clinique Dentaire Le Mesnil" data-pages="10" data-heading="Dentist">
+      <a target="_blank" href="http://u747927.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web067.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Dentist</h2><p>WEB067</p></div></div></div>
+                    <div class="meta siteid"><p>WEB067</p></div>
+        <div class="meta heading"><p>Dentist</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix pet fr enhanced" data-name="Clinique Vétérinaire Fabreville de Laval" data-pages="5" data-heading="Veterinarian">
+      <a target="_blank" href="http://u715655.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web068.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Veterinarian</h2><p>WEB068</p></div></div></div>
+                    <div class="meta siteid"><p>WEB068</p></div>
+        <div class="meta heading"><p>Veterinarian</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+      <li class="mix auto en base" data-name="Jiffy Lube" data-pages="10" data-heading="Garage">
+      <a target="_blank" href="http://u723129.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web072.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Garage</h2><p>WEB072</p></div></div></div>
+                    <div class="meta siteid"><p>WEB072</p></div>
+        <div class="meta heading"><p>Garage</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix clean en base" data-name="M&amp;M Supplies" data-pages="4" data-heading="Cleaning Supplies">
+      <a target="_blank" href="http://u713791.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web074.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Cleaning Supplies</h2><p>WEB074</p></div></div></div>
+                    <div class="meta siteid"><p>WEB074</p></div>
+        <div class="meta heading"><p>Cleaning Supplies</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix fin en base" data-name="MB Wealth Management" data-pages="10" data-heading="Wealth Management">
+      <a target="_blank" href="http://u683465.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web076.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Wealth Management</h2><p>WEB076</p></div></div></div>
+                    <div class="meta siteid"><p>WEB076</p></div>
+        <div class="meta heading"><p>Wealth Management</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix reno en base" data-name="Lotus Kitchen &amp; Design" data-pages="10" data-heading="Interior Decorating">
+      <a target="_blank" href="http://u685031.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web077.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Interior Decorating</h2><p>WEB077</p></div></div></div>
+                    <div class="meta siteid"><p>WEB077</p></div>
+        <div class="meta heading"><p>Interior Decorating</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix reno en base" data-name="Cousineau &amp; Sons" data-pages="7" data-heading="Contractor">
+      <a target="_blank" href="http://u751805.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web078.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Contractor</h2><p>WEB078</p></div></div></div>
+                    <div class="meta siteid"><p>WEB078</p></div>
+        <div class="meta heading"><p>Contractor</p></div>
+        <div class="meta rec"><ul><li>Gray</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix dent fr base" data-name="Centre Dentaire Giroux &amp; Normandeau" data-pages="5" data-heading="Dentist">
+      <a target="_blank" href="http://u723053.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web079.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Dentist</h2><p>WEB079</p></div></div></div>
+                    <div class="meta siteid"><p>WEB079</p></div>
+        <div class="meta heading"><p>Dentist</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+      <li class="mix reno fr base" data-name="Firme Martin Paradis" data-pages="27" data-heading="Surveyor">
+      <a target="_blank" href="http://u734599.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web080.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Surveyor</h2><p>WEB080</p></div></div></div>
+                    <div class="meta siteid"><p>WEB080</p></div>
+        <div class="meta heading"><p>Surveyor</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>27</p></div></a></li>
+
+      <li class="mix moving fr enhanced" data-name="Groupe TAP" data-pages="9" data-heading="Moving and Storage">
+      <a target="_blank" href="http://u751807.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web081.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Moving and Storage</h2><p>WEB081</p></div></div></div>
+                    <div class="meta siteid"><p>WEB081</p></div>
+        <div class="meta heading"><p>Moving and Storage</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix eye en enhanced" data-name="Pogue and Trenholm Optometry" data-pages="6" data-heading="Optometrist">
+      <a target="_blank" href="http://u726887.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web082.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Optometrist</h2><p>WEB082</p></div></div></div>
+                    <div class="meta siteid"><p>WEB082</p></div>
+        <div class="meta heading"><p>Optometrist</p></div>
+        <div class="meta rec"><ul><li>Teal</li></ul></div>
+        <div class="meta pages"><p>6</p></div></a></li>
+
+      <li class="mix rest fr base" data-name="La Piazza del Sogno" data-pages="8" data-heading="Restaurant">
+      <a target="_blank" href="http://u684787.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web083.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Restaurant</h2><p>WEB083</p></div></div></div>
+                    <div class="meta siteid"><p>WEB083</p></div>
+        <div class="meta heading"><p>Restaurant</p></div>
+        <div class="meta rec"><ul><li>Gray</li></ul></div>
+        <div class="meta pages"><p>8</p></div></a></li>
+
+      <li class="mix rest bi base" data-name="ORĀ Bistro Santé" data-pages="5" data-heading="Restaurant">
+      <a target="_blank" href="http://u754523.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web084.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Restaurant</h2><p>WEB084</p></div></div></div>
+                    <div class="meta siteid"><p>WEB084</p></div>
+        <div class="meta heading"><p>Restaurant</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+      <li class="mix rest fr base" data-name="Casa Minhota" data-pages="7" data-heading="Restaurant">
+      <a target="_blank" href="http://u762701.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web085.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Restaurant</h2><p>WEB085</p></div></div></div>
+                    <div class="meta siteid"><p>WEB085</p></div>
+        <div class="meta heading"><p>Restaurant</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+      <li class="mix salon fr base" data-name="Les Barbiers Roussillon" data-pages="5" data-heading="Barber">
+      <a target="_blank" href="http://u758521.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web086.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Barber</h2><p>WEB086</p></div></div></div>
+                    <div class="meta siteid"><p>WEB086</p></div>
+        <div class="meta heading"><p>Barber</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+      <li class="mix law fr base" data-name="Clair Nilsson Gagnon Avocats" data-pages="10" data-heading="Lawyer">
+      <a target="_blank" href="http://u726885.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web087.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Lawyer</h2><p>WEB087</p></div></div></div>
+                    <div class="meta siteid"><p>WEB087</p></div>
+        <div class="meta heading"><p>Lawyer</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix reno bi base" data-name="Acoustico" data-pages="5" data-heading="Contractor">
+      <a target="_blank" href="http://u750849.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web088.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Contractor</h2><p>WEB088</p></div></div></div>
+                    <div class="meta siteid"><p>WEB088</p></div>
+        <div class="meta heading"><p>Contractor</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+      <li class="mix auto en base" data-name="A-16 Automotive" data-pages="5" data-heading="Auto Parts">
+      <a target="_blank" href="http://u765099.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web089.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Auto Parts</h2><p>WEB089</p></div></div></div>
+                    <div class="meta siteid"><p>WEB089</p></div>
+        <div class="meta heading"><p>Auto Parts</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+      <li class="mix elec fr base" data-name="Duval Richard Inst Electrique" data-pages="3" data-heading="Electrician">
+      <a target="_blank" href="http://u777549.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web090.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Electrician</h2><p>WEB090</p></div></div></div>
+                    <div class="meta siteid"><p>WEB090</p></div>
+        <div class="meta heading"><p>Electrician</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>3</p></div></a></li>
+
+      <li class="mix reno fr enhanced" data-name="THIBODEAU + LABERGE" data-pages="4" data-heading="Architect">
+      <a target="_blank" href="http://u790675.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web091.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Architect</h2><p>WEB091</p></div></div></div>
+                    <div class="meta siteid"><p>WEB091</p></div>
+        <div class="meta heading"><p>Architect</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix reno fr base" data-name="Céramique Rosa Elite" data-pages="9" data-heading="Tile">
+      <a target="_blank" href="http://u781691.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web092.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Tile</h2><p>WEB092</p></div></div></div>
+                    <div class="meta siteid"><p>WEB092</p></div>
+        <div class="meta heading"><p>Tile</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix reno fr base" data-name="Reitano Concrete" data-pages="10" data-heading="Concrete">
+      <a target="_blank" href="http://u758427.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web093.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Concrete</h2><p>WEB093</p></div></div></div>
+                    <div class="meta siteid"><p>WEB093</p></div>
+        <div class="meta heading"><p>Concrete</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix store fr base" data-name="Les Ruchers des Aulnaies" data-pages="9" data-heading="Beekeeping">
+      <a target="_blank" href="http://u801673.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web094.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Beekeeping</h2><p>WEB094</p></div></div></div>
+                    <div class="meta siteid"><p>WEB094</p></div>
+        <div class="meta heading"><p>Beekeeping</p></div>
+        <div class="meta rec"><ul><li>Yellow</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix elec fr base" data-name="Bruneau Luminaire" data-pages="9" data-heading="Lighting">
+      <a target="_blank" href="http://u751811.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web095.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Lighting</h2><p>WEB095</p></div></div></div>
+                    <div class="meta siteid"><p>WEB095</p></div>
+        <div class="meta heading"><p>Lighting</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix store bi base" data-name="Flexracks" data-pages="4" data-heading="Wine Accessories">
+      <a target="_blank" href="http://u776669.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web096.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Wine Accessories</h2><p>WEB096</p></div></div></div>
+                    <div class="meta siteid"><p>WEB096</p></div>
+        <div class="meta heading"><p>Wine Accessories</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix not bi base" data-name="Frédéric Bonhomme Notaire" data-pages="9" data-heading="Notary">
+      <a target="_blank" href="http://u781641.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web097.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Notary</h2><p>WEB097</p></div></div></div>
+                    <div class="meta siteid"><p>WEB097</p></div>
+        <div class="meta heading"><p>Notary</p></div>
+        <div class="meta rec"><ul><li>Grey</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix child fr base" data-name="Clinique d’Orthopédagogie Myriam Gagnon" data-pages="10" data-heading="Orthopedagogist">
+      <a target="_blank" href="http://u793719.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web098.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Orthopedagogist</h2><p>WEB098</p></div></div></div>
+                    <div class="meta siteid"><p>WEB098</p></div>
+        <div class="meta heading"><p>Orthopedagogist</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix pet fr base" data-name="Vétérinaire Ambulatoire Équin Dre Véronique Duval" data-pages="9" data-heading="Veterinarian">
+      <a target="_blank" href="http://u784971.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web099.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Veterinarian</h2><p>WEB099</p></div></div></div>
+                    <div class="meta siteid"><p>WEB099</p></div>
+        <div class="meta heading"><p>Veterinarian</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix therapy en base" data-name="Northside Couselling Services" data-pages="4" data-heading="Counselling">
+      <a target="_blank" href="http://u777531.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web100.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Counselling</h2><p>WEB100</p></div></div></div>
+                    <div class="meta siteid"><p>WEB100</p></div>
+        <div class="meta heading"><p>Counselling</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix ex en base" data-name="Pierre’s Mini Excavation" data-pages="8" data-heading="Excavation">
+      <a target="_blank" href="http://u689267.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web101.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Excavation</h2><p>WEB101</p></div></div></div>
+                    <div class="meta siteid"><p>WEB101</p></div>
+        <div class="meta heading"><p>Excavation</p></div>
+        <div class="meta rec"><ul><li>Yellow</li></ul></div>
+        <div class="meta pages"><p>8</p></div></a></li>
+
+      <li class="mix fin en base" data-name="Front Gate Financial Group" data-pages="10" data-heading="Financial Services">
+      <a target="_blank" href="http://u716865.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web103.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Financial Services</h2><p>WEB103</p></div></div></div>
+                    <div class="meta siteid"><p>WEB103</p></div>
+        <div class="meta heading"><p>Financial Services</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix moving en base" data-name="Burgess Transfer" data-pages="17" data-heading="Moving &amp; Storage">
+      <a target="_blank" href="http://u777487.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web104.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Moving &amp; Storage</h2><p>WEB104</p></div></div></div>
+                    <div class="meta siteid"><p>WEB104</p></div>
+        <div class="meta heading"><p>Moving &amp; Storage</p></div>
+        <div class="meta rec"><ul><li>Brown</li></ul></div>
+        <div class="meta pages"><p>17</p></div></a></li>
+
+      <li class="mix pet en base" data-name="Dogs Devine" data-pages="7" data-heading="Pet Grooming">
+      <a target="_blank" href="http://u705873.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web105.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Pet Grooming</h2><p>WEB105</p></div></div></div>
+                    <div class="meta siteid"><p>WEB105</p></div>
+        <div class="meta heading"><p>Pet Grooming</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix sign en base" data-name="Impact Signs" data-pages="5" data-heading="Signs">
+      <a target="_blank" href="http://u780597.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web106.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Signs</h2><p>WEB106</p></div></div></div>
+                    <div class="meta siteid"><p>WEB106</p></div>
+        <div class="meta heading"><p>Signs</p></div>
+        <div class="meta rec"><ul><li>Yellow</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+      <li class="mix reno bi base" data-name="Benoit Péloquin" data-pages="10" data-heading="Land Surveyor">
+      <a target="_blank" href="http://u802247.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web107.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Land Surveyor</h2><p>WEB107</p></div></div></div>
+                    <div class="meta siteid"><p>WEB107</p></div>
+        <div class="meta heading"><p>Land Surveyor</p></div>
+        <div class="meta rec"><ul><li>Grey</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix sign fr base" data-name="Publicité Pastique Blais" data-pages="6" data-heading="Custom Displays">
+      <a target="_blank" href="http://u798895.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web108.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Custom Displays</h2><p>WEB108</p></div></div></div>
+                    <div class="meta siteid"><p>WEB108</p></div>
+        <div class="meta heading"><p>Custom Displays</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>6</p></div></a></li>
+
+      <li class="mix dent fr base" data-name="Centre Dentaire Sirois" data-pages="7" data-heading="Dentist">
+      <a target="_blank" href="http://u726725.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web109.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Dentist</h2><p>WEB109</p></div></div></div>
+                    <div class="meta siteid"><p>WEB109</p></div>
+        <div class="meta heading"><p>Dentist</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix dent fr base" data-name="Centre Dentaire Alain Isabelle" data-pages="10" data-heading="Dentist">
+      <a target="_blank" href="http://u805391.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web110.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Dentist</h2><p>WEB110</p></div></div></div>
+                    <div class="meta siteid"><p>WEB110</p></div>
+        <div class="meta heading"><p>Dentist</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix flor fr base" data-name="Fleuriste Lennoxville" data-pages="7" data-heading="Florist">
+      <a target="_blank" href="http://u782145.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web111.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Florist</h2><p>WEB111</p></div></div></div>
+                    <div class="meta siteid"><p>WEB111</p></div>
+        <div class="meta heading"><p>Florist</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix win bi base" data-name="IDÉKA Portes et Fenêtres" data-pages="14" data-heading="Windows &amp; Doors">
+      <a target="_blank" href="http://u762409.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web112.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Windows &amp; Doors</h2><p>WEB112</p></div></div></div>
+                    <div class="meta siteid"><p>WEB112</p></div>
+        <div class="meta heading"><p>Windows &amp; Doors</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>14</p></div></a></li>
+
+      <li class="mix pet fr base" data-name="Hôpital Vétérinaire du Haut-Richelieu" data-pages="10" data-heading="Veterinarian">
+      <a target="_blank" href="http://u750415.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web113.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Veterinarian</h2><p>WEB113</p></div></div></div>
+                    <div class="meta siteid"><p>WEB113</p></div>
+        <div class="meta heading"><p>Veterinarian</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix hvac fr enhanced" data-name="Climatisation Fraser" data-pages="16" data-heading="HVAC">
+      <a target="_blank" href="http://u840381.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web114.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>HVAC</h2><p>WEB114</p></div></div></div>
+                    <div class="meta siteid"><p>WEB114</p></div>
+        <div class="meta heading"><p>HVAC</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>16</p></div></a></li>
+
+      <li class="mix reno fr base" data-name="Sablage de Plancher A9" data-pages="9" data-heading="Flooring">
+      <a target="_blank" href="http://u863151.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web116.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Flooring</h2><p>WEB116</p></div></div></div>
+                    <div class="meta siteid"><p>WEB116</p></div>
+        <div class="meta heading"><p>Flooring</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix rest fr base" data-name="Boulangerie La Gerbe D’Or" data-pages="8" data-heading="Bakery">
+      <a target="_blank" href="http://u823241.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web117.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Bakery</h2><p>WEB117</p></div></div></div>
+                    <div class="meta siteid"><p>WEB117</p></div>
+        <div class="meta heading"><p>Bakery</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>8</p></div></a></li>
+
+      <li class="mix furn fr base" data-name="Martin Tremblay Meubles" data-pages="9" data-heading="Furniture">
+      <a target="_blank" href="http://u736797.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web118.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Furniture</h2><p>WEB118</p></div></div></div>
+                    <div class="meta siteid"><p>WEB118</p></div>
+        <div class="meta heading"><p>Furniture</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix reno bi base" data-name="Crown Granite" data-pages="4" data-heading="Granite and Stone">
+      <a target="_blank" href="http://u861639.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web119.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Granite and Stone</h2><p>WEB119</p></div></div></div>
+                    <div class="meta siteid"><p>WEB119</p></div>
+        <div class="meta heading"><p>Granite and Stone</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>4</p></div></a></li>
+
+      <li class="mix trav en base" data-name="Gull Lake Campground" data-pages="7" data-heading="Campground">
+      <a target="_blank" href="http://u860601.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web120.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Campground</h2><p>WEB120</p></div></div></div>
+                    <div class="meta siteid"><p>WEB120</p></div>
+        <div class="meta heading"><p>Campground</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix dent en base" data-name="Ellerslie Road Denture Clinic" data-pages="7" data-heading="Denturist">
+      <a target="_blank" href="http://u792555.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web121.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Denturist</h2><p>WEB121</p></div></div></div>
+                    <div class="meta siteid"><p>WEB121</p></div>
+        <div class="meta heading"><p>Denturist</p></div>
+        <div class="meta rec"><ul><li>Purple</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix phys fr base" data-name="Physio Pierre Brassard" data-pages="10" data-heading="Physiotherapist">
+      <a target="_blank" href="http://u816267.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web122.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Physiotherapist</h2><p>WEB122</p></div></div></div>
+                    <div class="meta siteid"><p>WEB122</p></div>
+        <div class="meta heading"><p>Physiotherapist</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix phys fr base" data-name="Santé Vous Bien" data-pages="6" data-heading="Chiropractor">
+      <a target="_blank" href="http://u864755.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web123.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Chiropractor</h2><p>WEB123</p></div></div></div>
+                    <div class="meta siteid"><p>WEB123</p></div>
+        <div class="meta heading"><p>Chiropractor</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>6</p></div></a></li>
+
+      <li class="mix plumb fr base" data-name="Kevin Chevrette Plomberie Chauffage" data-pages="7" data-heading="Plumber">
+      <a target="_blank" href="http://u793563.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web124.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Plumber</h2><p>WEB124</p></div></div></div>
+                    <div class="meta siteid"><p>WEB124</p></div>
+        <div class="meta heading"><p>Plumber</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix plumb bi enhanced" data-name="Le Groupe Charbonneau" data-pages="10" data-heading="Plumber">
+      <a target="_blank" href="http://u711217.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web125.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Plumber</h2><p>WEB125</p></div></div></div>
+                    <div class="meta siteid"><p>WEB125</p></div>
+        <div class="meta heading"><p>Plumber</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix ind en enhanced" data-name="Highland Foundry" data-pages="20" data-heading="Foundry">
+      <a target="_blank" href="http://u874105.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web127.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Foundry</h2><p>WEB127</p></div></div></div>
+                    <div class="meta siteid"><p>WEB127</p></div>
+        <div class="meta heading"><p>Foundry</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>20</p></div></a></li>
+
+      <li class="mix salon fr base" data-name="Gentlemen's Barber Shop" data-pages="5" data-heading="Barber Shop">
+      <a target="_blank" href="http://u924661.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web128.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Barber Shop</h2><p>WEB128</p></div></div></div>
+                    <div class="meta siteid"><p>WEB128</p></div>
+        <div class="meta heading"><p>Barber Shop</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>5</p></div></a></li>
+
+   <li class="mix eye fr base" data-name="Laser ProVue" data-pages="12" data-heading="Vision Professionals">
+      <a target="_blank" href="http://u731011.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web129.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>PVision Professionals</h2><p>WEB129</p></div></div></div>
+                    <div class="meta siteid"><p>WEB129</p></div>
+        <div class="meta heading"><p>Vision Professionals</p></div>
+        <div class="meta rec"><ul><li>Red</li></ul></div>
+        <div class="meta pages"><p>12</p></div></a></li>
+
+      <li class="mix lawn fr base" data-name="Les Aménagements Lamontagne" data-pages="10" data-heading="Landscaper">
+      <a target="_blank" href="http://u924233.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web130.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Landscaper</h2><p>WEB130</p></div></div></div>
+                    <div class="meta siteid"><p>WEB130</p></div>
+        <div class="meta heading"><p>Landscaper</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix bus bi base" data-name="Gabriel Bélisle Couture" data-pages="8" data-heading="Photographer">
+      <a target="_blank" href="http://u910047.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web131.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Photographer</h2><p>WEB131</p></div></div></div>
+                    <div class="meta siteid"><p>WEB131</p></div>
+        <div class="meta heading"><p>Photographer</p></div>
+        <div class="meta rec"><ul><li>Grey</li></ul></div>
+        <div class="meta pages"><p>8</p></div></a></li>
+
+      <li class="mix phys fr base" data-name="NeuroÉduc" data-pages="9" data-heading="Neuropsychology">
+      <a target="_blank" href="http://u936015.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web132.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Neuropsychology</h2><p>WEB132</p></div></div></div>
+                    <div class="meta siteid"><p>WEB132</p></div>
+        <div class="meta heading"><p>Neuropsychology</p></div>
+        <div class="meta rec"><ul><li>Green</li></ul></div>
+        <div class="meta pages"><p>9</p></div></a></li>
+
+      <li class="mix store bi base" data-name="Leone Canada" data-pages="13" data-heading="Training Equipment">
+      <a target="_blank" href="http://u933283.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web133.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Training Equipment</h2><p>WEB133</p></div></div></div>
+                    <div class="meta siteid"><p>WEB133</p></div>
+        <div class="meta heading"><p>Training Equipment</p></div>
+        <div class="meta rec"><ul><li>Black</li></ul></div>
+        <div class="meta pages"><p>13</p></div></a></li>
+
+      <li class="mix sport fr base" data-name="JM Sports" data-pages="7" data-heading="Off-road Vehicles">
+      <a target="_blank" href="http://u929953.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web134.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Off-road Vehicles</h2><p>WEB134</p></div></div></div>
+                    <div class="meta siteid"><p>WEB134</p></div>
+        <div class="meta heading"><p>Off-road Vehicles</p></div>
+        <div class="meta rec"><ul><li>Orange</li></ul></div>
+        <div class="meta pages"><p>7</p></div></a></li>
+
+      <li class="mix store bi base" data-name="Tapis Décor Chantilly" data-pages="10" data-heading="Home Decor">
+      <a target="_blank" href="http://u937905.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web135.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Home Decor</h2><p>WEB135</p></div></div></div>
+                    <div class="meta siteid"><p>WEB135</p></div>
+        <div class="meta heading"><p>Home Decor</p></div>
+        <div class="meta rec"><ul><li>Blue</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+      <li class="mix rest fr base" data-name="Le Buffet Du Passant" data-pages="10" data-heading="Caterer">
+      <a target="_blank" href="http://u914745.sandbox.sitereview.ca/?preview">
+        <div class="meta name">
+          <div class="img_wrapper"><img src="im/th/web136.jpg" onload="imgLoaded(this)"/>
+        <div class="titles"><h2>Caterer</h2><p>WEB136</p></div></div></div>
+                    <div class="meta siteid"><p>WEB136</p></div>
+        <div class="meta heading"><p>Caterer</p></div>
+        <div class="meta rec"><ul><li>Purple</li></ul></div>
+        <div class="meta pages"><p>10</p></div></a></li>
+
+
+	<li class="gap"></li>
+    	<li class="gap"></li>
+	<li class="gap"></li>
+    	<li class="gap"></li>
+      <!-- END LIST OF SITES -->
+
+    </ul>
+  </div>
+
+<!-- END WRAPPER -->
+
+</section>
+
+
+<!-- BEGIN FOOTER -->
+
+
+		<footer class="wf">
+                <p>Yellow Pages™ and Walking Fingers &amp; Design™ are trademarks of Yellow Pages Digital &amp; Media Solutions Limited in Canada.</p>
+			<div class="clear"></div>
+		</footer>
+
+<!-- END FOOTER -->
+
+</body>
+</html>
